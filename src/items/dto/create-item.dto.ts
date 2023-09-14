@@ -1,4 +1,5 @@
 import { IsBoolean, IsString, MaxLength, MinLength } from 'class-validator';
+import { CreateListingDto } from './create-listing.dto';
 
 export class CreateItemDto {
   @IsString()
@@ -8,4 +9,6 @@ export class CreateItemDto {
 
   @IsBoolean()
   public: boolean;
+
+  listing: CreateListingDto;
 }
