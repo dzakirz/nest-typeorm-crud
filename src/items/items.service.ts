@@ -6,6 +6,7 @@ import { UpdateItemDto } from './dto/update-item.dto';
 import { Comment } from './entities/comment.entity';
 import { Item } from './entities/item.entity';
 import { Listing } from './entities/listing.entity';
+import { Tag } from './entities/tag.entity';
 
 @Injectable()
 export class ItemsService {
@@ -21,9 +22,14 @@ export class ItemsService {
       rating: 0,
     });
 
+    const tags = createItemDto.tags.map(
+      (createTagDto) => new Tag(createTagDto),
+    );
+
     const item = new Item({
       ...createItemDto,
       comments: [],
+      tags: tags,
       listing: listing,
     });
     await this.entityManager.save(item);
@@ -38,7 +44,11 @@ export class ItemsService {
   async findOne(id: number) {
     return this.itemsRepository.findOne({
       where: { id: id },
-      relations: ['listing', 'comments'],
+      relations: {
+        listing: true,
+        tags: true,
+        comments: true,
+      },
     });
   }
 
