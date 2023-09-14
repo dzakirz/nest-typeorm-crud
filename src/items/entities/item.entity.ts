@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   OneToMany,
   OneToOne,
@@ -28,5 +29,6 @@ export class Item extends AbstractEntity<Item> {
   comments: Comment[];
 
   @ManyToMany(() => Tag, { cascade: true })
+  @JoinTable()
   tags: Tag[];
 }
